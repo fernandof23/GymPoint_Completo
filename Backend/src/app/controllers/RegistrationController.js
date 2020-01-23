@@ -66,7 +66,7 @@ export default {
       where: {},
       attributes: [
         'id',
-        'ativo',
+        'active',
         'daysLeft',
         'start_date',
         'end_date',

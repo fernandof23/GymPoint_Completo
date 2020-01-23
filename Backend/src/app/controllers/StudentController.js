@@ -1,4 +1,5 @@
 import * as Yup from 'yup';
+import { Op } from 'sequelize';
 import Student from '../models/Student';
 
 export default {
@@ -89,11 +90,22 @@ export default {
   },
   async index(req, res) {
     const { page = 1 } = req.query;
+    const { q } = req.query;
+
+    if (q) {
+      const studentFilter = await Student.findAll({
+        where: { name: { [Op.like]: `%${q}%` } },
+        limit: 20,
+        offset: (page - 1) * 20,
+      });
+
+      return res.status(200).json(studentFilter);
+    }
     const students = await Student.findAll({
       where: {},
       limit: 20,
       offset: (page - 1) * 20,
     });
-    return res.json(students);
+    return res.status(200).json(students);
   },
 };

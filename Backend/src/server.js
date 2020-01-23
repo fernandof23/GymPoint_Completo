@@ -1,5 +1,7 @@
 import app from './app';
 
-const Port = 3333
+const Port = 3333;
 
-app.server.listen(Port, () => { Console.log(`Api rodando pela porta: ${Port}`) });
+app.server.listen(Port, () => {
+    console.log(`Api rodando pela porta: ${Port}`);
+});
