@@ -1,4 +1,5 @@
 import React from 'react';
+import './config/ReactotronConfig';
 import { Router } from 'react-router-dom';
 import history from '~/services/history';
 
