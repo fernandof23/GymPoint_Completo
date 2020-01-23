@@ -1,5 +1,7 @@
 import React from 'react';
 
+import otherPage from '~/components/header';
+
 function App() {
     return (
         <div>
