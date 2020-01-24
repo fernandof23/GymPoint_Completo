@@ -14,7 +14,7 @@ export default function header() {
                         <img src={logo} alt="gymlogo" />
                     </Link>
                     <Botoes>
-                        <Link to="/alunos">
+                        <Link to="/dashboard">
                             <p>ALUNOS</p>
                         </Link>
 
@@ -26,7 +26,7 @@ export default function header() {
                             <p>MATRÌCULAS</p>
                         </Link>
 
-                        <Link to="/auxilioalunos">
+                        <Link to="/helpsystem">
                             <p>PEDIDOS DE AUXÌLIO</p>
                         </Link>
                     </Botoes>
