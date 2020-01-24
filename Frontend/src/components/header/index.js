@@ -1,11 +1,15 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
+
+import { signOut } from '~/store/modules/auth/actions';
 
 import { Wrapper, Content, Botoes } from './styles';
 
 import logo from '~/assets/logomin.svg';
 
-export default function header() {
+export default function Header() {
+    const dispatch = useDispatch();
     return (
         <Wrapper>
             <Content>
@@ -34,7 +38,9 @@ export default function header() {
 
                 <aside>
                     <p>Fernando Santos</p>
-                    <button type="button">Sair do Sistema</button>
+                    <button type="button" onClick={() => dispatch(signOut())}>
+                        Sair do Sistema
+                    </button>
                 </aside>
             </Content>
         </Wrapper>

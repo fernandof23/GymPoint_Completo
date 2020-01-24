@@ -30,12 +30,20 @@ export const Content = styled.div`
         flex-direction: column;
         margin: 40px auto;
 
-        span {
+        p {
             align-self: flex-start;
             margin-bottom: 8px;
             margin-top: 20px;
             font-weight: bold;
             color: #ee4d64;
+        }
+
+        span {
+            font-size: 10px;
+            margin-top: 5px;
+            align-self: flex-start;
+
+            color: red;
         }
 
         input {
