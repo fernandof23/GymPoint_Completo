@@ -1,5 +1,5 @@
-import React from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import { signOut } from '~/store/modules/auth/actions';
@@ -9,6 +9,8 @@ import { Wrapper, Content, Botoes } from './styles';
 import logo from '~/assets/logomin.svg';
 
 export default function Header() {
+    const profile = useSelector(state => state.user.profile);
+
     const dispatch = useDispatch();
     return (
         <Wrapper>
@@ -37,7 +39,7 @@ export default function Header() {
                 </div>
 
                 <aside>
-                    <p>Fernando Santos</p>
+                    <p>{profile.name}</p>
                     <button type="button" onClick={() => dispatch(signOut())}>
                         Sair do Sistema
                     </button>

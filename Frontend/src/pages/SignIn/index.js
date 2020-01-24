@@ -11,9 +11,6 @@ import Logo from '~/assets/logo.png';
 export default function SignIn() {
     const [loading, setLoading] = useState(false);
 
-    const load = useSelector(state => state.auth.loading);
-
-    setLoading(load);
     const dispatch = useDispatch();
     function handleSubmit(data) {
         const { email, password } = data;
