@@ -53,9 +53,9 @@ export const DivTop = styled.div`
 `;
 
 export const Content = styled.div`
-    margin-top: 20px;
+    margin: 20px 10px;
     background: #fff;
-    padding: 30px;
+    padding: 20px;
 
     table {
         width: 100%;
@@ -65,6 +65,11 @@ export const Content = styled.div`
         th {
             font-size: 16px;
             color: #444;
+        }
+
+        table,
+        th:first-child {
+            column-width: 300px;
         }
 
         td,
@@ -77,6 +82,15 @@ export const Content = styled.div`
             color: #666;
         }
 
+        td:nth-child(3) {
+            padding-left: 30px;
+        }
+
+        td:nth-child(4) {
+            display: flex;
+            justify-content: flex-end;
+        }
+
         tr + tr {
             border-top: 1px solid #eee;
         }
@@ -84,5 +98,27 @@ export const Content = styled.div`
         tr:hover {
             background: #eee;
         }
+
+        a {
+            color: #4d85ee;
+            font-size: 15px;
+        }
+
+        button {
+            background: none;
+            border: 0;
+            color: #de3b3b;
+            padding-left: 23px;
+        }
+    }
+`;
+
+export const Footer = styled.div`
+    display: flex;
+    justify-content: center;
+    margin: 20px auto;
+
+    a + a {
+        padding-left: 10px;
     }
 `;
