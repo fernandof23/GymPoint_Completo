@@ -20,7 +20,7 @@ export default function Header() {
                         <img src={logo} alt="gymlogo" />
                     </Link>
                     <Botoes>
-                        <Link to="/dashboard">
+                        <Link to="/students">
                             <p>ALUNOS</p>
                         </Link>
 
