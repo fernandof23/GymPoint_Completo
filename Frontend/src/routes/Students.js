@@ -18,6 +18,11 @@ export default function StudentRoutes() {
                 component={StudentAdd}
                 isPrivate
             />
+            <RouteWrapper
+                path="/dashboard/students/edit/:id"
+                component={StudentAdd}
+                isPrivate
+            />
         </>
     );
 }

@@ -3,6 +3,7 @@ import produce from 'immer';
 const INITIAL_STATE = {
     students: [],
     loading: false,
+    StudentEdit: [],
 };
 
 export default function students(state = INITIAL_STATE, action) {
@@ -10,10 +11,12 @@ export default function students(state = INITIAL_STATE, action) {
         switch (action.type) {
             case '@students/LOAD_STUDENTS_REQUEST': {
                 draft.loading = true;
+                draft.StudentEdit = [];
                 break;
             }
             case '@students/LOAD_STUDENTS_SUCESS': {
                 draft.students = action.payload.students;
+                draft.StudentEdit = [];
                 draft.loading = false;
                 break;
             }
@@ -27,6 +30,10 @@ export default function students(state = INITIAL_STATE, action) {
             }
             case '@students/CREATE_STUDENT_FAILURE': {
                 draft.loading = false;
+                break;
+            }
+            case '@students/LOAD_STUDENT_EDIT_SUCESS': {
+                draft.StudentEdit = action.payload.data;
                 break;
             }
 

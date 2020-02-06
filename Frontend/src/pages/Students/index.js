@@ -79,7 +79,9 @@ export default function Students() {
                                 <td>{item.email}</td>
                                 <td>{item.age}</td>
                                 <td>
-                                    <Link to={`/students/${item.id}`}>
+                                    <Link
+                                        to={`/dashboard/students/edit/${item.id}`}
+                                    >
                                         editar
                                     </Link>
                                     <button

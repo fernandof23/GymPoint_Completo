@@ -7,6 +7,7 @@ import {
     loadStudentSucess,
     createStudentFail,
     createStudentSucess,
+    loadStudentToEditSucess,
 } from './actions';
 
 export function* loadStudents({ payload }) {
@@ -45,7 +46,21 @@ export function* createStudent({ payload }) {
     }
 }
 
+export function* loadToEdit({ payload }) {
+    const { id } = payload;
+    try {
+        if (!id) return;
+
+        const response = yield call(api.get, `/students/${id}`);
+
+        yield put(loadStudentToEditSucess(response.data));
+    } catch (err) {
+        toast.error('Erro ao carregar pagina');
+    }
+}
+
 export default all([
     takeLatest('@students/LOAD_STUDENTS_REQUEST', loadStudents),
     takeLatest('@students/CREATE_STUDENT_REQUEST', createStudent),
+    takeLatest('@students/LOAD_STUDENT_EDIT', loadToEdit),
 ]);

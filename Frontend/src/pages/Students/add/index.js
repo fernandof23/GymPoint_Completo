@@ -1,18 +1,24 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
+
 import history from '~/services/history';
 
 import { Wrapper, Header, PaperInputs } from './styles';
 
 import Button from '~/components/button';
 
-import { createStudentRequest } from '~/store/modules/students/actions';
+import {
+    createStudentRequest,
+    loadStudentToEdit,
+} from '~/store/modules/students/actions';
 
-export default function AddStudents() {
+export default function AddStudents({ match }) {
+    const dispatch = useDispatch();
+    const [student, setStudent] = useState(null);
     const schema = Yup.object().shape({
         name: Yup.string().required('Nome Obrigatório'),
         email: Yup.string()
@@ -25,9 +31,17 @@ export default function AddStudents() {
         height: Yup.string().required('Altura Obrigatória'),
     });
 
-    const loading = useSelector(state => state.students.loading);
+    useEffect(() => {
+        dispatch(loadStudentToEdit(match.params.id));
+    }, [dispatch, match.params.id]);
 
-    const dispatch = useDispatch();
+    const loading = useSelector(state => state.students.loading);
+    const singleStudant = useSelector(state => state.students.StudentEdit);
+
+    useEffect(() => {
+        setStudent(singleStudant);
+    }, [singleStudant]);
+
     function handleSubmit(data) {
         const { name, email, age, weight, height } = data;
 
@@ -36,7 +50,11 @@ export default function AddStudents() {
 
     return (
         <Wrapper>
-            <Form schema={schema} onSubmit={handleSubmit}>
+            <Form
+                schema={schema}
+                onSubmit={handleSubmit}
+                initialData={singleStudant ? student : null}
+            >
                 <Header>
                     <h1>Cadastro de Aluno</h1>
 

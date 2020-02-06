@@ -30,3 +30,17 @@ export function createStudentFail() {
         type: '@students/CREATE_STUDENT_FAILURE',
     };
 }
+
+export function loadStudentToEdit(id) {
+    return {
+        type: '@students/LOAD_STUDENT_EDIT',
+        payload: { id },
+    };
+}
+
+export function loadStudentToEditSucess(data) {
+    return {
+        type: '@students/LOAD_STUDENT_EDIT_SUCESS',
+        payload: { data },
+    };
+}
