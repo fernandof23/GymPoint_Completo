@@ -13,10 +13,11 @@ const button = ({
     margin,
     fontWeight,
     onClick,
+    type,
 }) => {
     return (
         <Button
-            type="button"
+            type={type || 'button'}
             fontSize={fontSize}
             color={color}
             background={background}
