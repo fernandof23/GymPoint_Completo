@@ -8,6 +8,8 @@ import {
     MdNavigateNext,
 } from 'react-icons/md';
 
+import history from '~/services/history';
+
 import { Wrapper, DivTop, Content, Footer } from './styles';
 
 import { loadStudentsRequest } from '~/store/modules/students/actions';
@@ -45,7 +47,10 @@ export default function Students() {
             <DivTop>
                 <h1>Gerenciando alunos</h1>
                 <div>
-                    <button type="button">
+                    <button
+                        type="button"
+                        onClick={() => history.push('/dashboard/students/add')}
+                    >
                         <MdAdd size={20} color="#fff" fontWeight="bold" />
                         CADASTRAR
                     </button>

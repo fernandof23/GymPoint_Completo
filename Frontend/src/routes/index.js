@@ -1,25 +1,37 @@
 import React from 'react';
-import { Switch } from 'react-router-dom';
-import Route from './route';
+import { Switch, Route } from 'react-router-dom';
+import RouteWrapper from './route';
 
 import SignIn from '~/pages/SignIn';
 import SignUp from '~/pages/SignUp';
 import Dashboard from '~/pages/Dashboard';
-import Students from '~/pages/Students';
-import Planos from '~/pages/Planos';
-import Matriculas from '~/pages/Matriculas';
-import Help from '~/pages/HelpSystem';
+
+import StudentRoute from './Students';
+import PlansRoutes from './Plans';
+import RegisterStudentsRoutes from './RegisterStudents';
+import HelpSystemRoutes from './HelpSystem';
 
 export default function Routes() {
     return (
         <Switch>
-            <Route path="/" exact component={SignIn} />
-            <Route path="/register" component={SignUp} />
-            <Route path="/dashboard" component={Dashboard} isPrivate />
-            <Route path="/students" component={Students} isPrivate />
-            <Route path="/planos" component={Planos} isPrivate />
-            <Route path="/matriculas" component={Matriculas} isPrivate />
-            <Route path="/helpsystem" component={Help} isPrivate />
+            <RouteWrapper path="/" exact component={SignIn} />
+
+            <RouteWrapper path="/register" component={SignUp} />
+
+            <RouteWrapper
+                path="/dashboard"
+                exact
+                component={Dashboard}
+                isPrivate
+            />
+
+            <Route path="/dashboard/students">{StudentRoute()}</Route>
+
+            <Route path="/dashboard/plans">{PlansRoutes()}</Route>
+
+            <Route path="/dashboard/register">{RegisterStudentsRoutes()}</Route>
+
+            <Route path="/dashboard/helpsystem">{HelpSystemRoutes()}</Route>
         </Switch>
     );
 }
