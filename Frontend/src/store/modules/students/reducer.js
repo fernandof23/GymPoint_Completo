@@ -17,6 +17,18 @@ export default function students(state = INITIAL_STATE, action) {
                 draft.loading = false;
                 break;
             }
+            case '@students/CREATE_STUDENT_REQUEST': {
+                draft.loading = true;
+                break;
+            }
+            case '@students/CREATE_STUDENT_SUCESS': {
+                draft.loading = false;
+                break;
+            }
+            case '@students/CREATE_STUDENT_FAILURE': {
+                draft.loading = false;
+                break;
+            }
 
             default:
         }

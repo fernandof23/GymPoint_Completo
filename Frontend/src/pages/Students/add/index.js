@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Form, Input } from '@rocketseat/unform';
 import * as Yup from 'yup';
 
@@ -8,6 +9,8 @@ import history from '~/services/history';
 import { Wrapper, Header, PaperInputs } from './styles';
 
 import Button from '~/components/button';
+
+import { createStudentRequest } from '~/store/modules/students/actions';
 
 export default function AddStudents() {
     const schema = Yup.object().shape({
@@ -22,8 +25,13 @@ export default function AddStudents() {
         height: Yup.string().required('Altura Obrigatória'),
     });
 
+    const loading = useSelector(state => state.students.loading);
+
+    const dispatch = useDispatch();
     function handleSubmit(data) {
-        console.log(data);
+        const { name, email, age, weight, height } = data;
+
+        dispatch(createStudentRequest(name, email, age, weight, height));
     }
 
     return (
@@ -49,7 +57,7 @@ export default function AddStudents() {
                         <div>
                             <Button width="112px" height="36px" type="submit">
                                 <MdCheck size={20} color="#fff" />
-                                SALVAR
+                                {loading ? 'SALVANDO...' : 'SALVAR'}
                             </Button>
                         </div>
                     </aside>
