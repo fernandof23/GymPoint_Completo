@@ -12,6 +12,8 @@ import history from '~/services/history';
 
 import { Wrapper, DivTop, Content, Footer } from './styles';
 
+import Button from '~/components/button';
+
 import { loadStudentsRequest } from '~/store/modules/students/actions';
 
 export default function Students() {
@@ -47,13 +49,12 @@ export default function Students() {
             <DivTop>
                 <h1>Gerenciando alunos</h1>
                 <div>
-                    <button
-                        type="button"
+                    <Button
                         onClick={() => history.push('/dashboard/students/add')}
                     >
                         <MdAdd size={20} color="#fff" fontWeight="bold" />
                         CADASTRAR
-                    </button>
+                    </Button>
                     <aside>
                         <MdSearch size={16} color="#999" />
                         <input

@@ -17,19 +17,6 @@ export const DivTop = styled.div`
 
     div {
         display: flex;
-        button {
-            border: 0;
-            background: #ee4d64;
-            border-radius: 4px;
-            width: 142px;
-            height: 36px;
-            color: #fff;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: space-around;
-            padding: 0 13px;
-        }
 
         aside {
             display: flex;
