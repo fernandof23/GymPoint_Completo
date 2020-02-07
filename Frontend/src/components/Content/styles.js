@@ -1,48 +1,10 @@
 import styled from 'styled-components';
 
-export const Wrapper = styled.div`
-    margin: auto;
-    max-width: 1200px;
-    margin-top: 30px;
-`;
-
-export const DivTop = styled.div`
-    display: flex;
-    justify-content: space-between;
-
-    h1 {
-        font-size: 24px;
-        color: #444;
-    }
-
-    div {
-        display: flex;
-
-        aside {
-            display: flex;
-            align-items: center;
-            border: 1px solid #eee;
-            background: #fff;
-            border-radius: 4px;
-            margin-left: 16px;
-            padding: 0 10px;
-
-            input {
-                border: none;
-                height: 36px;
-
-                &::placeholder {
-                    color: #999;
-                }
-            }
-        }
-    }
-`;
-
-export const Content = styled.div`
+export const Container = styled.div`
     margin: 20px 10px;
     background: #fff;
     padding: 20px;
+    border-radius: 4px;
 
     table {
         width: 100%;
@@ -97,21 +59,5 @@ export const Content = styled.div`
             color: #de3b3b;
             padding-left: 23px;
         }
-    }
-`;
-
-export const Footer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin: 20px auto;
-
-    div {
-        margin: auto 20px;
-    }
-
-    button {
-        border: none;
-        background: none;
     }
 `;

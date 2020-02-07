@@ -7,9 +7,12 @@ import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
 
 import history from '~/services/history';
 
-import { Wrapper, Header, PaperInputs } from './styles';
+// import { PaperInputs } from './styles';
 
 import Button from '~/components/button';
+import Container from '~/components/Container';
+import Header from '~/components/headerAdd';
+import PaperInput from '~/components/PaperInputsAdd';
 
 import {
     createStudentRequest,
@@ -64,7 +67,7 @@ export default function AddStudents({ match }) {
     }
 
     return (
-        <Wrapper>
+        <Container maxWidht="900px">
             <Form
                 schema={schema}
                 onSubmit={handleSubmit}
@@ -72,7 +75,7 @@ export default function AddStudents({ match }) {
             >
                 <Header>
                     {activeEdit ? (
-                        <h1>Atualizando Aluno</h1>
+                        <h1>Edição de Aluno</h1>
                     ) : (
                             <h1>Cadastro de Aluno</h1>
                         )}
@@ -100,7 +103,7 @@ export default function AddStudents({ match }) {
                     </aside>
                 </Header>
 
-                <PaperInputs>
+                <PaperInput>
                     <p>NOME COMPLETO</p>
                     <Input name="name" type="text" placeholder="John Doe" />
                     <p>ENDEREÇO DE E-MAIL</p>
@@ -124,8 +127,8 @@ export default function AddStudents({ match }) {
                             <Input name="height" type="float" />
                         </div>
                     </div>
-                </PaperInputs>
+                </PaperInput>
             </Form>
-        </Wrapper>
+        </Container>
     );
 }

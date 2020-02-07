@@ -11,9 +11,11 @@ import {
 
 import history from '~/services/history';
 
-import { Wrapper, DivTop, Content, Footer } from './styles';
-
 import Button from '~/components/button';
+import Container from '~/components/Container';
+import DivTop from '~/components/DivTop';
+import Content from '~/components/Content';
+import Footer from '~/components/Footer';
 
 import {
     loadStudentsRequest,
@@ -57,7 +59,7 @@ export default function Students() {
     }
 
     return (
-        <Wrapper>
+        <Container>
             <DivTop>
                 <h1>Gerenciando alunos</h1>
                 <div>
@@ -124,6 +126,6 @@ export default function Students() {
                     )}
                 </Footer>
             </Content>
-        </Wrapper>
+        </Container>
     );
 }
