@@ -10,7 +10,7 @@ import DivTop from '~/components/DivTop';
 import Content from '~/components/Content';
 import Button from '~/components/button';
 
-import { loadPlansRequest } from '~/store/modules/plans/actions';
+import { loadPlansRequest, deletedPlan } from '~/store/modules/plans/actions';
 
 export default function Planos() {
     const dispatch = useDispatch();
@@ -25,6 +25,15 @@ export default function Planos() {
     useEffect(() => {
         setPlans(dataPlans);
     }, [dataPlans]);
+
+    function handleDelete(id) {
+        const deletePlan = window.confirm('Deseja Deletar esse plano?');
+
+        if (deletePlan) {
+            dispatch(deletedPlan(id));
+            window.location.reload();
+        }
+    }
 
     return (
         <Container maxWidht="900px">
@@ -54,14 +63,17 @@ export default function Planos() {
                                     {plan.duration}{' '}
                                     {plan.duration === 1 ? 'mês' : 'meses'}
                                 </td>
-                                <td>{plan.price}</td>
+                                <td>{plan.priceFormated}</td>
                                 <td>
                                     <Link
                                         to={`/dashboard/plans/edit/${plan.id}`}
                                     >
                                         editar
                                     </Link>
-                                    <button type="button" onClick={() => { }}>
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDelete(plan.id)}
+                                    >
                                         apagar
                                     </button>
                                 </td>

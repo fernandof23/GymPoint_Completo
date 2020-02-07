@@ -29,3 +29,23 @@ export function createPlansSucess() {
         type: '@plans/CREATE_PLAN_SUCESS',
     };
 }
+
+export function updatePlansRequest(id, title, duration, price) {
+    return {
+        type: '@plans/UPDATE_PLAN_REQUEST',
+        payload: { id, title, duration, price },
+    };
+}
+
+export function updatePlansSucess() {
+    return {
+        type: '@plans/UPDATE_PLAN_SUCESS',
+    };
+}
+
+export function deletedPlan(id) {
+    return {
+        type: '@plans/DELETED_PLAN',
+        payload: { id },
+    };
+}

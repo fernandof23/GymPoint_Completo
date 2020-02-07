@@ -6,7 +6,12 @@ import history from '~/services/history';
 
 import { FormatPrice } from '~/util/format';
 
-import { loadPlansSucess, PlansFailured, createPlansSucess } from './actions';
+import {
+    loadPlansSucess,
+    PlansFailured,
+    createPlansSucess,
+    updatePlansSucess,
+} from './actions';
 
 export function* loadPlans() {
     try {
@@ -15,7 +20,7 @@ export function* loadPlans() {
         const plans = response.data.map(item => ({
             ...item,
             totalPrice: FormatPrice(item.duration * item.price),
-            price: FormatPrice(item.price),
+            priceFormated: FormatPrice(item.price),
         }));
 
         yield put(loadPlansSucess(plans));
@@ -40,7 +45,36 @@ export function* createPlans({ payload }) {
     }
 }
 
+export function* updatePlan({ payload }) {
+    try {
+        const { id } = payload;
+
+        yield call(api.put, `plans/${id}`, payload);
+
+        yield put(updatePlansSucess());
+
+        toast.success('Plano atualizado com Sucesso');
+
+        history.push('/dashboard/plans');
+    } catch (err) {
+        toast.error('ERRO AO ATUALIZAR PLANO');
+        yield put(PlansFailured());
+    }
+}
+
+export function* deletedPlan({ payload }) {
+    try {
+        const { id } = payload;
+        yield call(api.delete, `plans/${id}`);
+
+        toast.success('Plano Deletado Com sucesso');
+    } catch (err) {
+        toast.error('Erro ao deletar Plano');
+    }
+}
 export default all([
     takeLatest('@plans/LOAD_PLANS_REQUEST', loadPlans),
     takeLatest('@plans/CREATE_PLAN_REQUEST', createPlans),
+    takeLatest('@plans/UPDATE_PLAN_REQUEST', updatePlan),
+    takeLatest('@plans/DELETED_PLAN', deletedPlan),
 ]);

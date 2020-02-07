@@ -11,7 +11,10 @@ import Header from '~/components/headerAdd';
 import PaperInput from '~/components/PaperInputsAdd';
 import Button from '~/components/button';
 
-import { createPlansRequest } from '~/store/modules/plans/actions';
+import {
+    createPlansRequest,
+    updatePlansRequest,
+} from '~/store/modules/plans/actions';
 
 export default function Add({ match }) {
     const [plan, setPlan] = useState([]);
@@ -39,7 +42,11 @@ export default function Add({ match }) {
     function handleSubmit(data) {
         const { title, duration, price } = data;
 
-        dispatch(createPlansRequest(title, duration, price));
+        if (plan.length > 0) {
+            dispatch(updatePlansRequest(id, title, duration, price));
+        } else {
+            dispatch(createPlansRequest(title, duration, price));
+        }
     }
 
     return (
