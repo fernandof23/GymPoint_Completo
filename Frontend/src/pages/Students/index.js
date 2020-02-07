@@ -45,6 +45,7 @@ export default function Students() {
 
         if (confirm) {
             dispatch(deleteStudentRequest(id));
+            window.location.reload();
         }
     }
 
