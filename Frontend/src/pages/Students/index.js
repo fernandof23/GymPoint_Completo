@@ -1,3 +1,4 @@
+/* eslint-disable no-alert */
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -14,7 +15,10 @@ import { Wrapper, DivTop, Content, Footer } from './styles';
 
 import Button from '~/components/button';
 
-import { loadStudentsRequest } from '~/store/modules/students/actions';
+import {
+    loadStudentsRequest,
+    deleteStudentRequest,
+} from '~/store/modules/students/actions';
 
 export default function Students() {
     const [student, setStudent] = useState([]);
@@ -33,8 +37,15 @@ export default function Students() {
         setStudent(students);
     }, [students]);
 
-    async function handleDelete(id) {
-        console.log(id);
+    function handleDelete(id) {
+        const deletedCliente = student.filter(item => item.id === id);
+        const confirm = window.confirm(
+            `Você deseja deletar ${deletedCliente[0].name} ? `
+        );
+
+        if (confirm) {
+            dispatch(deleteStudentRequest(id));
+        }
     }
 
     function filterStudent(e) {

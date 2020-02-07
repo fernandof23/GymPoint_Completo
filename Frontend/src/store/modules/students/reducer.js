@@ -4,6 +4,7 @@ const INITIAL_STATE = {
     students: [],
     loading: false,
     StudentEdit: [],
+    activeEdit: false,
 };
 
 export default function students(state = INITIAL_STATE, action) {
@@ -17,6 +18,7 @@ export default function students(state = INITIAL_STATE, action) {
             case '@students/LOAD_STUDENTS_SUCESS': {
                 draft.students = action.payload.students;
                 draft.StudentEdit = [];
+                draft.activeEdit = false;
                 draft.loading = false;
                 break;
             }
@@ -34,6 +36,7 @@ export default function students(state = INITIAL_STATE, action) {
             }
             case '@students/LOAD_STUDENT_EDIT_SUCESS': {
                 draft.StudentEdit = action.payload.data;
+                draft.activeEdit = true;
                 break;
             }
 

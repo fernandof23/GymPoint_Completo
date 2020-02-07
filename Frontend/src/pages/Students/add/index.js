@@ -14,6 +14,7 @@ import Button from '~/components/button';
 import {
     createStudentRequest,
     loadStudentToEdit,
+    uploadStudentRequest,
 } from '~/store/modules/students/actions';
 
 export default function AddStudents({ match }) {
@@ -37,6 +38,7 @@ export default function AddStudents({ match }) {
 
     const loading = useSelector(state => state.students.loading);
     const singleStudant = useSelector(state => state.students.StudentEdit);
+    const activeEdit = useSelector(state => state.students.activeEdit);
 
     useEffect(() => {
         setStudent(singleStudant);
@@ -45,7 +47,20 @@ export default function AddStudents({ match }) {
     function handleSubmit(data) {
         const { name, email, age, weight, height } = data;
 
-        dispatch(createStudentRequest(name, email, age, weight, height));
+        if (activeEdit) {
+            dispatch(
+                uploadStudentRequest(
+                    match.params.id,
+                    name,
+                    email,
+                    age,
+                    weight,
+                    height
+                )
+            );
+        } else {
+            dispatch(createStudentRequest(name, email, age, weight, height));
+        }
     }
 
     return (
@@ -56,7 +71,11 @@ export default function AddStudents({ match }) {
                 initialData={singleStudant ? student : null}
             >
                 <Header>
-                    <h1>Cadastro de Aluno</h1>
+                    {activeEdit ? (
+                        <h1>Atualizando Aluno</h1>
+                    ) : (
+                            <h1>Cadastro de Aluno</h1>
+                        )}
 
                     <aside>
                         <div>

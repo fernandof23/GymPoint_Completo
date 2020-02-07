@@ -44,3 +44,17 @@ export function loadStudentToEditSucess(data) {
         payload: { data },
     };
 }
+
+export function deleteStudentRequest(id) {
+    return {
+        type: '@students/DELETE_STUDENT_REQUEST',
+        payload: { id },
+    };
+}
+
+export function uploadStudentRequest(id, name, email, age, weight, height) {
+    return {
+        type: '@students/UPDATE_STUDENT_REQUEST',
+        payload: { id, name, email, age, weight, height },
+    };
+}
