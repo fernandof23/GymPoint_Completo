@@ -33,6 +33,7 @@ export default function Add({ match }) {
     });
 
     const plans = useSelector(state => state.plans.plans);
+    const loading = useSelector(state => state.plans.loading);
 
     useEffect(() => {
         const planEdit = plans.filter(item => item.id === Number(id));
@@ -74,7 +75,7 @@ export default function Add({ match }) {
                         <div>
                             <Button width="112px" height="36px" type="submit">
                                 <MdCheck size={20} color="#fff" />
-                                Salvar
+                                {loading ? 'Salvando...' : 'Salvar'}
                             </Button>
                         </div>
                     </aside>
