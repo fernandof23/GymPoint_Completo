@@ -13,8 +13,8 @@ import {
 export function* loadStudents({ payload }) {
     const { student, page } = payload;
     try {
-        const searchStudent = `&q=${student}`;
-        const pageFilter = `?page=${page}`;
+        const searchStudent = student ? `&q=${student}` : '';
+        const pageFilter = page ? `?page=${page}` : `?page=1`;
 
         const response = yield call(
             api.get,

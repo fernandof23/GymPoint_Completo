@@ -37,6 +37,14 @@ export const Paper = styled.div`
             margin-right: 15px;
         }
 
+        > select {
+            width: 198px;
+            background: none;
+            border: 1px solid #ddd;
+            height: 45px;
+            margin-right: 15px;
+        }
+
         > div {
             display: flex;
             flex-direction: column;

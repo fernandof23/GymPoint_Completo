@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { MdAdd, MdCheckCircle } from 'react-icons/md';
 import { format } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 import history from '~/services/history';
 import { Content } from './styled';
 
@@ -10,7 +11,10 @@ import Container from '~/components/Container';
 import DivTop from '~/components/DivTop';
 import Button from '~/components/button';
 
-import { loadRegisterRequest } from '~/store/modules/register/actions';
+import {
+    loadRegisterRequest,
+    deleteRegister,
+} from '~/store/modules/register/actions';
 
 export default function Matriculas() {
     const [register, setRegister] = useState([]);
@@ -26,7 +30,17 @@ export default function Matriculas() {
         setRegister(registerTemp);
     }, [registerTemp]);
 
-    function handleDelete() { }
+    function handleDelete(id, name) {
+        const deleteConfirm = window.confirm(
+            `Deseja deletar a matricula de ${name}`
+        );
+
+        if (deleteConfirm) {
+            dispatch(deleteRegister(id));
+
+            window.location.reload();
+        }
+    }
 
     return (
         <Container maxWidht="1380px">
@@ -58,13 +72,15 @@ export default function Matriculas() {
                                 <td>
                                     {format(
                                         new Date(regis.start_date),
-                                        'dd/MM/yyyy'
+                                        "d 'de' MMMM 'de' yyyy",
+                                        { locale: pt }
                                     )}
                                 </td>
                                 <td>
                                     {format(
                                         new Date(regis.end_date),
-                                        'dd/MM/yyyy'
+                                        "d 'de' MMMM 'de' yyyy",
+                                        { locale: pt }
                                     )}
                                 </td>
                                 <td>
@@ -79,11 +95,16 @@ export default function Matriculas() {
                                     <Link
                                         to={`/dashboard/register/edit/${regis.id}`}
                                     >
-                                        Editar
+                                        editar
                                     </Link>
                                     <button
                                         type="button"
-                                        onClick={() => handleDelete()}
+                                        onClick={() =>
+                                            handleDelete(
+                                                regis.id,
+                                                regis.student.name
+                                            )
+                                        }
                                     >
                                         {' '}
                                         apagar

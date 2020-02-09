@@ -16,3 +16,10 @@ export function registerFailured() {
         type: '@register/REGISTER_FAILURED',
     };
 }
+
+export function deleteRegister(id) {
+    return {
+        type: '@register/DELETE_REGISTER',
+        payload: { id },
+    };
+}

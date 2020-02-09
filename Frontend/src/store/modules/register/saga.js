@@ -17,6 +17,19 @@ export function* loadRegister() {
     }
 }
 
+export function* deleteRegister({ payload }) {
+    const { id } = payload;
+
+    try {
+        yield call(api.delete, `registration/${id}`);
+
+        toast.success('Matricula Deletada com Sucesso');
+    } catch (err) {
+        toast.error('Erro ao deletar matricula');
+    }
+}
+
 export default all([
     takeLatest('@register/LOAD_REGISTER_REQUEST', loadRegister),
+    takeLatest('@register/DELETE_REGISTER', deleteRegister),
 ]);
