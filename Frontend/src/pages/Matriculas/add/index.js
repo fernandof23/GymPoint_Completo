@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Input, Select } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
+
 import history from '~/services/history';
 
 import { InputField } from './styles';
@@ -13,22 +14,47 @@ import Container from '~/components/Container';
 import Header from '~/components/headerAdd';
 import PaperInput from '~/components/PaperInputsAdd';
 import Button from '~/components/button';
+import ReactAsync from '~/components/ReactAsync';
 
 export default function Add() {
     const dispatch = useDispatch();
 
-    useEffect(() => {
-        dispatch(loadPlansRequest());
-        dispatch(loadStudentsRequest());
-    }, [dispatch]);
+    const [student, setStudent] = useState([]);
+    const [searchStudent, setSearchStudent] = useState('');
+    const [page, setPage] = useState(1);
 
     const plans = useSelector(state => state.plans.plans);
-    const students = useSelector(state => state.students.students).map(
-        item => ({
+    const students = useSelector(state => state.students.students);
+
+    useEffect(() => {
+        dispatch(loadPlansRequest());
+        dispatch(loadStudentsRequest(searchStudent, page));
+    }, [dispatch, page, searchStudent]);
+
+    useEffect(() => {
+        const filterStudents = students.map(item => ({
             ...item,
-            title: item.name,
-        })
-    );
+            value: item.id,
+            label: item.name,
+        }));
+
+        setStudent(filterStudents);
+    }, [students]);
+
+    const loadOptions = (inputValue, callback) => {
+        setTimeout(() => {
+            callback(student);
+        }, 10);
+    };
+
+    function loadStudents(inputValue) {
+        setPage(1);
+        setSearchStudent(inputValue);
+    }
+
+    function loadInput(inputValue) {
+        console.log(inputValue);
+    }
 
     return (
         <Container maxWidht="900px">
@@ -59,7 +85,14 @@ export default function Add() {
                 </Header>
                 <PaperInput>
                     <p>ALUNO</p>
-                    <Select name="student" options={students} />
+                    <ReactAsync
+                        name="alunoSelect"
+                        loadOptions={loadOptions}
+                        placeHolder="Selecione o Aluno"
+                        onInputChange={loadStudents}
+                        handleInputChange={loadInput}
+                    />
+
                     <div>
                         <div>
                             <p>PLANO</p>

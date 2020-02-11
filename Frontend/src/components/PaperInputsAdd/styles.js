@@ -43,6 +43,7 @@ export const Paper = styled.div`
             border: 1px solid #ddd;
             height: 45px;
             margin-right: 15px;
+            border-radius: 4px;
         }
 
         > div {

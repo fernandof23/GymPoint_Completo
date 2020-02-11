@@ -1,7 +1,5 @@
 import React from 'react';
 
-import { Container } from './styles';
-
 export default function HelpSystem() {
-    return <div />;
+    return <h1>Teste</h1>;
 }
