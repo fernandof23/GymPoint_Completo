@@ -23,7 +23,7 @@ export default {
     });
 
     if (emailExists) {
-      return res.status(400).json({ error: 'user already exists' });
+      return res.status(200).json({ error: 'user already exists' });
     }
 
     const { name, email, age, weight, height } = await Student.create(req.body);
@@ -95,16 +95,18 @@ export default {
     if (q) {
       const studentFilter = await Student.findAll({
         where: { name: { [Op.like]: `%${q}%` } },
-        limit: 20,
-        offset: (page - 1) * 20,
+        limit: 10,
+        offset: (page - 1) * 10,
+        order: ['id'],
       });
 
       return res.status(200).json(studentFilter);
     }
     const students = await Student.findAll({
       where: {},
-      limit: 20,
-      offset: (page - 1) * 20,
+      limit: 10,
+      offset: (page - 1) * 10,
+      order: ['id'],
     });
     return res.status(200).json(students);
   },

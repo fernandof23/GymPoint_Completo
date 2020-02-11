@@ -19,7 +19,10 @@ export default {
   },
 
   async index(req, res) {
-    const plans = await Plans.findAll({ where: {} });
+    const plans = await Plans.findAll({
+      where: {},
+      order: ['duration'],
+    });
     return res.json(plans);
   },
 
