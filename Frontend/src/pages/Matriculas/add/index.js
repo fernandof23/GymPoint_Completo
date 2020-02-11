@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { Form, Input, Select } from '@rocketseat/unform';
+import { Form, Select } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
+import DayPickerInput from 'react-day-picker/DayPickerInput';
+import { DateUtils } from 'react-day-picker';
+import dateFnsFormat from 'date-fns/format';
+import dateFnsParse from 'date-fns/parse';
 
 import history from '~/services/history';
 
-import { InputField } from './styles';
+import { InputField, PaperInput } from './styles';
 
 import { loadPlansRequest } from '~/store/modules/plans/actions';
 import { loadStudentsRequest } from '~/store/modules/students/actions';
 
 import Container from '~/components/Container';
 import Header from '~/components/headerAdd';
-import PaperInput from '~/components/PaperInputsAdd';
 import Button from '~/components/button';
 import ReactAsync from '~/components/ReactAsync';
 
@@ -44,7 +47,7 @@ export default function Add() {
     const loadOptions = (inputValue, callback) => {
         setTimeout(() => {
             callback(student);
-        }, 10);
+        }, 1500);
     };
 
     function loadStudents(inputValue) {
@@ -52,13 +55,25 @@ export default function Add() {
         setSearchStudent(inputValue);
     }
 
-    function loadInput(inputValue) {
-        console.log(inputValue);
+    function handleSubmit(data) {
+        console.log(data);
+    }
+
+    function parseDate(str, format, locale) {
+        const parsed = dateFnsParse(str, format, new Date(), { locale });
+        if (DateUtils.isDate(parsed)) {
+            return parsed;
+        }
+        return undefined;
+    }
+
+    function formatDate(date, format, locale) {
+        return dateFnsFormat(date, format, { locale });
     }
 
     return (
         <Container maxWidht="900px">
-            <Form>
+            <Form onSubmit={handleSubmit}>
                 <Header>
                     <h1>Cadastro de Matrícula</h1>
                     <aside>
@@ -86,21 +101,31 @@ export default function Add() {
                 <PaperInput>
                     <p>ALUNO</p>
                     <ReactAsync
-                        name="alunoSelect"
+                        name="name"
                         loadOptions={loadOptions}
                         placeHolder="Selecione o Aluno"
                         onInputChange={loadStudents}
-                        handleInputChange={loadInput}
                     />
 
                     <div>
                         <div>
                             <p>PLANO</p>
                             <Select name="plan" options={plans} />
-                        </div>
-                        <div>
-                            <p>DATA DE INÍCIO</p>
-                            <Input name="start_date" />
+
+                            <aside>
+                                <p>DATA DE INÍCIO</p>
+
+                                <DayPickerInput
+                                    name="start_date"
+                                    formatDate={formatDate}
+                                    format="MM/dd/yyyy"
+                                    parseDate={parseDate}
+                                    placeholder={`${dateFnsFormat(
+                                        new Date(),
+                                        'MM/dd/yyyy'
+                                    )}`}
+                                />
+                            </aside>
                         </div>
                         <div>
                             <p>DATA DE TÉRMINO</p>

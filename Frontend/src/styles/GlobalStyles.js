@@ -1,4 +1,5 @@
 import { createGlobalStyle } from 'styled-components';
+import 'react-day-picker/lib/style.css';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default createGlobalStyle`
