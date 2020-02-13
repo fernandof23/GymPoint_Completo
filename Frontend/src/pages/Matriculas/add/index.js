@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Select } from '@rocketseat/unform';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
@@ -13,6 +13,7 @@ import { InputField, PaperInput } from './styles';
 
 import { loadPlansRequest } from '~/store/modules/plans/actions';
 import { loadStudentsRequest } from '~/store/modules/students/actions';
+import { addRegisterRequest } from '~/store/modules/register/actions';
 
 import Container from '~/components/Container';
 import Header from '~/components/headerAdd';
@@ -25,6 +26,7 @@ export default function Add() {
     const [student, setStudent] = useState([]);
     const [searchStudent, setSearchStudent] = useState('');
     const [page, setPage] = useState(1);
+    const [startDate, setStartDate] = useState('');
 
     const plans = useSelector(state => state.plans.plans);
     const students = useSelector(state => state.students.students);
@@ -56,7 +58,8 @@ export default function Add() {
     }
 
     function handleSubmit(data) {
-        console.log(data);
+        const { name, plan } = data;
+        dispatch(addRegisterRequest(name, plan, startDate));
     }
 
     function parseDate(str, format, locale) {
@@ -68,7 +71,9 @@ export default function Add() {
     }
 
     function formatDate(date, format, locale) {
-        return dateFnsFormat(date, format, { locale });
+        setStartDate(dateFnsFormat(date, format, { locale }));
+        const formatTrue = 'dd/MM/yyyy';
+        return dateFnsFormat(date, formatTrue, { locale });
     }
 
     return (
@@ -118,10 +123,10 @@ export default function Add() {
                                 <DayPickerInput
                                     name="start_date"
                                     formatDate={formatDate}
-                                    format="MM/dd/yyyy"
+                                    format="yyyy-MM-dd"
                                     parseDate={parseDate}
                                     placeholder={`${dateFnsFormat(
-                                        new Date(),
+                                        new Date('01 / 01 / 1900'),
                                         'MM/dd/yyyy'
                                     )}`}
                                 />
@@ -129,11 +134,11 @@ export default function Add() {
                         </div>
                         <div>
                             <p>DATA DE TÉRMINO</p>
-                            <InputField name="date_end" />
+                            <InputField name="date_end" readOnly />
                         </div>
                         <div>
                             <p>VALOR FINAL</p>
-                            <InputField name="priceFinish" />
+                            <InputField name="priceFinish" readOnly />
                         </div>
                     </div>
                 </PaperInput>

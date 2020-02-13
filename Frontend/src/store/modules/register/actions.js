@@ -23,3 +23,16 @@ export function deleteRegister(id) {
         payload: { id },
     };
 }
+
+export function addRegisterRequest(student_id, plan_id, start_date) {
+    return {
+        type: '@register/ADD_REGISTER_REQUEST',
+        payload: { student_id, plan_id, start_date },
+    };
+}
+
+export function addRegisterSucess() {
+    return {
+        type: '@register/ADD_REGISTER_SUCESS',
+    };
+}

@@ -17,6 +17,19 @@ export default function register(state = INITIAL_STATE, action) {
                 draft.loading = false;
                 break;
             }
+            case '@register/REGISTER_FAILURED': {
+                draft.loading = false;
+                break;
+            }
+            case '@register/ADD_REGISTER_REQUEST': {
+                draft.loading = true;
+                break;
+            }
+
+            case '@register/ADD_REGISTER_SUCESS': {
+                draft.loading = false;
+                break;
+            }
             default:
         }
     });
