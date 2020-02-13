@@ -18,6 +18,11 @@ export default function RegisterStudentsRoutes() {
                 component={RegisterAdd}
                 isPrivate
             />
+            <RouteWrapper
+                path="/dashboard/register/edit/:id"
+                component={RegisterAdd}
+                isPrivate
+            />
         </>
     );
 }

@@ -1,11 +1,14 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Form, Select } from '@rocketseat/unform';
+import * as Yup from 'yup';
 import { MdKeyboardArrowLeft, MdCheck } from 'react-icons/md';
 import DayPickerInput from 'react-day-picker/DayPickerInput';
 import { DateUtils } from 'react-day-picker';
+import { parseISO, addMonths } from 'date-fns';
 import dateFnsFormat from 'date-fns/format';
 import dateFnsParse from 'date-fns/parse';
+import { toast } from 'react-toastify';
 
 import history from '~/services/history';
 
@@ -13,23 +16,52 @@ import { InputField, PaperInput } from './styles';
 
 import { loadPlansRequest } from '~/store/modules/plans/actions';
 import { loadStudentsRequest } from '~/store/modules/students/actions';
-import { addRegisterRequest } from '~/store/modules/register/actions';
+import {
+    addRegisterRequest,
+    loadRegisterRequest,
+    updateRegisterRequest,
+} from '~/store/modules/register/actions';
 
 import Container from '~/components/Container';
 import Header from '~/components/headerAdd';
 import Button from '~/components/button';
 import ReactAsync from '~/components/ReactAsync';
 
-export default function Add() {
+export default function Add({ match }) {
     const dispatch = useDispatch();
 
     const [student, setStudent] = useState([]);
     const [searchStudent, setSearchStudent] = useState('');
     const [page, setPage] = useState(1);
     const [startDate, setStartDate] = useState('');
+    const [planId, setPlanId] = useState('');
+    const [nameEdit, setNameEdit] = useState([]);
 
     const plans = useSelector(state => state.plans.plans);
     const students = useSelector(state => state.students.students);
+    const register = useSelector(state => state.register.register);
+
+    const schema = Yup.object().shape({
+        name: Yup.number(),
+        plan: Yup.string().required('Plano obrigatorio'),
+    });
+
+    const { id } = match.params;
+
+    useEffect(() => {
+        const registerE = register.filter(item => item.id === Number(id));
+
+        setNameEdit(registerE.map(item => item.student));
+        setPlanId(registerE.map(item => item.plans.id));
+    }, [id, register]);
+
+    useEffect(() => {
+        document.title = 'GymPoint - Matrículas';
+    }, []);
+
+    useEffect(() => {
+        dispatch(loadRegisterRequest());
+    }, [dispatch]);
 
     useEffect(() => {
         dispatch(loadPlansRequest());
@@ -57,10 +89,41 @@ export default function Add() {
         setSearchStudent(inputValue);
     }
 
+    function checkRegisterAlready(idUser) {
+        const registerAlready = register.filter(
+            item => item.student.id === idUser
+        );
+
+        if (registerAlready.length > 0) {
+            toast.error('Aluno já tem uma Matrícula');
+            return true;
+        }
+
+        return false;
+    }
+
     function handleSubmit(data) {
         const { name, plan } = data;
-        dispatch(addRegisterRequest(name, plan, startDate));
+
+        if (!startDate) {
+            toast.error('SELECIONAR DATA DE INICIO');
+            return;
+        }
+
+        if (id) {
+            const studentEdit = nameEdit.map(item => item.id);
+
+            dispatch(
+                updateRegisterRequest(id, studentEdit[0], plan, startDate)
+            );
+        } else {
+            if (checkRegisterAlready(name)) return;
+
+            dispatch(addRegisterRequest(name, plan, startDate));
+        }
     }
+
+    console.log('id', id);
 
     function parseDate(str, format, locale) {
         const parsed = dateFnsParse(str, format, new Date(), { locale });
@@ -76,11 +139,37 @@ export default function Add() {
         return dateFnsFormat(date, formatTrue, { locale });
     }
 
+    const priceTotal = useMemo(() => {
+        if (planId) {
+            const price = plans.filter(item => Number(planId) === item.id);
+            const priceFinish = price.map(item => item.totalPrice);
+            return priceFinish;
+        }
+        return '';
+    }, [planId, plans]);
+
+    const dateFinish = useMemo(() => {
+        if (startDate) {
+            const price = plans.filter(item => Number(planId) === item.id);
+            const planDuration = price.map(item => item.duration);
+            const end_date = addMonths(parseISO(startDate), planDuration);
+            const endDate = dateFnsFormat(new Date(end_date), 'dd/MM/yyyy');
+            return endDate;
+        }
+
+        return `${dateFnsFormat(new Date('01 / 01 / 1900'), 'MM/dd/yyyy')}`;
+    }, [planId, plans, startDate]);
+
     return (
         <Container maxWidht="900px">
-            <Form onSubmit={handleSubmit}>
+            <Form onSubmit={handleSubmit} schema={schema}>
                 <Header>
-                    <h1>Cadastro de Matrícula</h1>
+                    {id ? (
+                        <h1>Edição de Matrícula</h1>
+                    ) : (
+                            <h1>Cadastro de Matrícula</h1>
+                        )}
+
                     <aside>
                         <div>
                             <Button
@@ -105,17 +194,31 @@ export default function Add() {
                 </Header>
                 <PaperInput>
                     <p>ALUNO</p>
-                    <ReactAsync
-                        name="name"
-                        loadOptions={loadOptions}
-                        placeHolder="Selecione o Aluno"
-                        onInputChange={loadStudents}
-                    />
+
+                    {id ? (
+                        <input
+                            name="name2"
+                            value={nameEdit.map(item => item.name)}
+                            disabled
+                        />
+                    ) : (
+                            <ReactAsync
+                                name="name"
+                                loadOptions={loadOptions}
+                                placeHolder="Selecione o Aluno"
+                                onInputChange={loadStudents}
+                            />
+                        )}
 
                     <div>
                         <div>
                             <p>PLANO</p>
-                            <Select name="plan" options={plans} />
+                            <Select
+                                name="plan"
+                                options={plans}
+                                value={planId}
+                                onChange={e => setPlanId(e.target.value)}
+                            />
 
                             <aside>
                                 <p>DATA DE INÍCIO</p>
@@ -134,11 +237,20 @@ export default function Add() {
                         </div>
                         <div>
                             <p>DATA DE TÉRMINO</p>
-                            <InputField name="date_end" readOnly />
+                            <InputField
+                                name="date_end"
+                                value={dateFinish}
+                                placeholder=""
+                                readOnly
+                            />
                         </div>
                         <div>
                             <p>VALOR FINAL</p>
-                            <InputField name="priceFinish" readOnly />
+                            <InputField
+                                name="priceFinish"
+                                value={priceTotal}
+                                readOnly
+                            />
                         </div>
                     </div>
                 </PaperInput>

@@ -36,3 +36,16 @@ export function addRegisterSucess() {
         type: '@register/ADD_REGISTER_SUCESS',
     };
 }
+
+export function updateRegisterRequest(id, student_id, plan_id, start_date) {
+    return {
+        type: '@register/UPDATE_REGISTER_REQUEST',
+        payload: { id, student_id, plan_id, start_date },
+    };
+}
+
+export function updateRegisterSucess() {
+    return {
+        type: '@register/UPDATE_REGISTER_SUCESS',
+    };
+}

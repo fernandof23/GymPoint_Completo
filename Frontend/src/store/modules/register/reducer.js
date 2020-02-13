@@ -30,6 +30,14 @@ export default function register(state = INITIAL_STATE, action) {
                 draft.loading = false;
                 break;
             }
+            case '@register/UPDATE_REGISTER_REQUEST': {
+                draft.loading = true;
+                break;
+            }
+            case '@register/UPDATE_REGISTER_SUCESS': {
+                draft.loading = false;
+                break;
+            }
             default:
         }
     });

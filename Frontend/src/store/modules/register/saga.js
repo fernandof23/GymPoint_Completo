@@ -8,6 +8,7 @@ import {
     loadRegisterSucess,
     registerFailured,
     addRegisterSucess,
+    updateRegisterSucess,
 } from './actions';
 
 export function* loadRegister() {
@@ -48,8 +49,25 @@ export function* addRegister({ payload }) {
     }
 }
 
+export function* updateRegister({ payload }) {
+    try {
+        const { id } = payload;
+        yield call(api.put, `registration/${id}`, payload);
+
+        yield put(updateRegisterSucess());
+
+        toast.success('Matrícula editada com Sucesso!');
+
+        history.push('/dashboard/register');
+    } catch (err) {
+        toast.error('Erro ao atualizar Matrícula');
+        yield put(registerFailured());
+    }
+}
+
 export default all([
     takeLatest('@register/LOAD_REGISTER_REQUEST', loadRegister),
     takeLatest('@register/DELETE_REGISTER', deleteRegister),
     takeLatest('@register/ADD_REGISTER_REQUEST', addRegister),
+    takeLatest('@register/UPDATE_REGISTER_REQUEST', updateRegister),
 ]);

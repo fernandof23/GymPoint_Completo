@@ -32,6 +32,10 @@ export default function Students() {
     const students = useSelector(state => state.students.students);
 
     useEffect(() => {
+        document.title = 'GymPoint - Alunos';
+    }, []);
+
+    useEffect(() => {
         dispatch(loadStudentsRequest(searchStudent, page));
     }, [dispatch, page, searchStudent]);
 
