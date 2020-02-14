@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { MdAdd, MdCheckCircle } from 'react-icons/md';
 import { format } from 'date-fns';
 import pt from 'date-fns/locale/pt';
+import Swal from 'sweetalert2';
 import history from '~/services/history';
 import { Content } from './styled';
 
@@ -31,15 +32,20 @@ export default function Matriculas() {
     }, [registerTemp]);
 
     function handleDelete(id, name) {
-        const deleteConfirm = window.confirm(
-            `Deseja deletar a matricula de ${name}`
-        );
+        Swal.fire({
+            title: `Deseja deletar a matricula de ${name} ? `,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#EE4D64',
+            confirmButtonText: 'Sim, pode deletar!',
+        }).then(result => {
+            if (result.value) {
+                dispatch(deleteRegister(id));
 
-        if (deleteConfirm) {
-            dispatch(deleteRegister(id));
-
-            window.location.reload();
-        }
+                window.location.reload();
+            }
+        });
     }
 
     return (
