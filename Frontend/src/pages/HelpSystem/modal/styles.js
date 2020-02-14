@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const ContainerModal = styled.div`
+export const Container = styled.div`
     width: 450px;
     max-width: 100%;
     margin: 10px auto;

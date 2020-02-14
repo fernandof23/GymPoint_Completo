@@ -56,7 +56,8 @@ export const Container = styled.div`
         button {
             background: none;
             border: 0;
-            color: #de3b3b;
+            color: ${props =>
+        props.inputColor ? props.inputColor : '#de3b3b'};
             padding-left: 23px;
         }
     }
