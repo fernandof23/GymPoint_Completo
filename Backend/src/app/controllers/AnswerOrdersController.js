@@ -32,7 +32,14 @@ export default {
   },
 
   async index(req, res) {
-    const answer = await Orders.find({ answer: null });
-    return res.json(answer);
+    const answerData = await Orders.find({ answer: null });
+    const students = await Students.findAll({});
+
+    const newArray = answerData.map(answer => ({
+      ...answer,
+      student: students.filter(item => item.id === Number(answer.student_id)),
+    }));
+
+    return res.json(newArray);
   },
 };
