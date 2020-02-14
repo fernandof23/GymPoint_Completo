@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 import { MdAdd } from 'react-icons/md';
 
@@ -27,12 +28,19 @@ export default function Planos() {
     }, [dataPlans]);
 
     function handleDelete(id) {
-        const deletePlan = window.confirm('Deseja Deletar esse plano?');
-
-        if (deletePlan) {
-            dispatch(deletedPlan(id));
-            window.location.reload();
-        }
+        Swal.fire({
+            title: `Deseja deletar esse plano? `,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#EE4D64',
+            confirmButtonText: 'Sim, pode deletar!',
+        }).then(result => {
+            if (result.value) {
+                dispatch(deletedPlan(id));
+                window.location.reload();
+            }
+        });
     }
 
     return (
