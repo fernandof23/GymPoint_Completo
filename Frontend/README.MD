@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="Gympoint" title="Gympoint" src="./Frontend/src/assets/logo.png" width="200px" />
+  <img alt="Gympoint" title="Gympoint" src="./src/assets/logo.png" width="200px" />
 </h1>
 
 <h3 align="center">
@@ -69,7 +69,10 @@ yarn start
 
 ## Criado por:
 
-Fernando Santos – [@Fernando](https://www.linkedin.com/in/fernando-santos-686632122/) – Email - [@Email](mail:fernandorato.0@hotmail.com)
+- Fernando Santos
+
+- <a href="https://www.linkedin.com/in/fernando-santos-686632122/">Linkedin</a>
+- <a href="mailto:fernandorato.0@hotmail.com">e-mail</a>
 
 
 
