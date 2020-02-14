@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import {
     MdAdd,
     MdSearch,
@@ -45,14 +46,20 @@ export default function Students() {
 
     function handleDelete(id) {
         const deletedCliente = student.filter(item => item.id === id);
-        const confirm = window.confirm(
-            `Você deseja deletar ${deletedCliente[0].name} ? `
-        );
 
-        if (confirm) {
-            dispatch(deleteStudentRequest(id));
-            window.location.reload();
-        }
+        Swal.fire({
+            title: `Você deseja deletar ${deletedCliente[0].name} ? `,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#EE4D64',
+            confirmButtonText: 'Sim, pode deletar!',
+        }).then(result => {
+            if (result.value) {
+                dispatch(deleteStudentRequest(id));
+                window.location.reload();
+            }
+        });
     }
 
     function filterStudent(e) {
