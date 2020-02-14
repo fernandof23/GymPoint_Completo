@@ -1,5 +1,6 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+
+import Swal from 'sweetalert2';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -26,7 +27,11 @@ export function* loadPlans() {
         yield put(loadPlansSucess(plans));
     } catch (err) {
         yield put(PlansFailured());
-        toast.error('Falha ao Carregar Plano');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Erro ao carregar Planos',
+        });
     }
 }
 
@@ -36,11 +41,24 @@ export function* createPlans({ payload }) {
 
         yield put(createPlansSucess());
 
-        toast.success('Plano Registrado com Sucesso');
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Plano criado com Sucesso',
+            showConfirmButton: false,
+            timer: 1000,
+        });
 
         history.push('/dashboard/plans');
     } catch (err) {
-        toast.error('ERRO AO REGISTRAR PLANO');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops',
+            text: 'Falha ao criar plano',
+            showConfirmButton: false,
+            timer: 1000,
+        });
         yield put(PlansFailured());
     }
 }
@@ -53,11 +71,24 @@ export function* updatePlan({ payload }) {
 
         yield put(updatePlansSucess());
 
-        toast.success('Plano atualizado com Sucesso');
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Plano atualizado com Sucesso',
+            showConfirmButton: false,
+            timer: 1000,
+        });
 
         history.push('/dashboard/plans');
     } catch (err) {
-        toast.error('ERRO AO ATUALIZAR PLANO');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Erro ao atualizar Plano',
+            showConfirmButton: false,
+            timer: 1000,
+        });
         yield put(PlansFailured());
     }
 }
@@ -67,9 +98,22 @@ export function* deletedPlan({ payload }) {
         const { id } = payload;
         yield call(api.delete, `plans/${id}`);
 
-        toast.success('Plano Deletado Com sucesso');
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Plano deletado com Sucesso',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     } catch (err) {
-        toast.error('Erro ao deletar Plano');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Erro ao deletar plano',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     }
 }
 export default all([

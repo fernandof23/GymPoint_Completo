@@ -1,5 +1,6 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+
+import Swal from 'sweetalert2';
 
 import api from '~/services/api';
 import history from '~/services/history';
@@ -17,7 +18,14 @@ export function* loadRegister() {
 
         yield put(loadRegisterSucess(response.data));
     } catch (err) {
-        toast.error('Falha ao carregar Matriculas');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Erro ao carregar Matrículas',
+            showConfirmButton: false,
+            timer: 1000,
+        });
         yield put(registerFailured());
     }
 }
@@ -28,16 +36,36 @@ export function* deleteRegister({ payload }) {
     try {
         yield call(api.delete, `registration/${id}`);
 
-        toast.success('Matricula Deletada com Sucesso');
+        Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Matrícula deletada com Sucesso',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     } catch (err) {
-        toast.error('Erro ao deletar matricula');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Erro ao deletar matrícula',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     }
 }
 
 export function* addRegister({ payload }) {
     try {
         yield call(api.post, 'registration', payload);
-        toast.success('Matricula realizada com Sucesso');
+
+        yield Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Matrícula criada com sucesso',
+            showConfirmButton: false,
+            timer: 1000,
+        });
 
         yield put(addRegisterSucess());
 
@@ -45,7 +73,14 @@ export function* addRegister({ payload }) {
     } catch (err) {
         yield put(registerFailured());
 
-        toast.error('Falha ao criar Matricula');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Erro ao criar Matrícula',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     }
 }
 
@@ -56,11 +91,25 @@ export function* updateRegister({ payload }) {
 
         yield put(updateRegisterSucess());
 
-        toast.success('Matrícula editada com Sucesso!');
+        yield Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Matrícula editada com Sucesso',
+            showConfirmButton: false,
+            timer: 1000,
+        });
 
         history.push('/dashboard/register');
     } catch (err) {
-        toast.error('Erro ao atualizar Matrícula');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Erro ao editar matrículaao deletar plano',
+            showConfirmButton: false,
+            timer: 1000,
+        });
+
         yield put(registerFailured());
     }
 }

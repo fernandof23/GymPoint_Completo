@@ -1,5 +1,4 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
 import Swal from 'sweetalert2';
 import api from '~/services/api';
 
@@ -10,7 +9,12 @@ export function* loadQuestions() {
         const response = yield call(api.get, 'help-orders');
         yield put(loadQuestionSucess(response.data));
     } catch (err) {
-        toast.error('Falha ao carregar perguntas');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Algo deu errado ao carregar perguntas',
+        });
+
         yield put(questionFailured());
     }
 }
@@ -23,8 +27,8 @@ export function* answerSend({ payload }) {
 
         yield put(answerSucess());
 
-        Swal.fire({
-            position: 'top-end',
+        yield Swal.fire({
+            position: 'center',
             icon: 'success',
             title: 'Your work has been saved',
             showConfirmButton: false,

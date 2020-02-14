@@ -1,5 +1,6 @@
 import { takeLatest, put, call, all } from 'redux-saga/effects';
 import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import history from '~/services/history';
 import api from '~/services/api';
 import { signInSucess, signFailure } from './actions';
@@ -17,7 +18,11 @@ export function* signIn({ payload }) {
 
         history.push('/dashboard');
     } catch (err) {
-        toast.error('FALHA NA AUTENTICAÇÂO');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Erro ao realizar Login',
+        });
         yield put(signFailure());
     }
 }
@@ -32,7 +37,11 @@ export function* signUp({ payload }) {
 
         history.push('/');
     } catch (err) {
-        toast.error('Falha ao criar Conta');
+        Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Erro ao criar conta',
+        });
         yield put(signFailure());
     }
 }

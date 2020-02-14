@@ -1,5 +1,5 @@
 import { takeLatest, call, put, all } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 import api from '~/services/api';
 import history from '~/services/history';
 
@@ -23,7 +23,14 @@ export function* loadStudents({ payload }) {
 
         yield put(loadStudentSucess(response.data));
     } catch (err) {
-        toast.error('Falha ao carregar os Alunos');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Falha ao carregar Alunos',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     }
 }
 
@@ -32,16 +39,38 @@ export function* createStudent({ payload }) {
         const response = yield call(api.post, 'students', payload);
 
         if (response.data.error) {
-            toast.error('E-mail Já Cadastrado');
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Ooops...',
+                text: 'E-mail ja Cadastrado',
+                showConfirmButton: false,
+                timer: 1000,
+            });
+
             yield put(createStudentFail());
             return;
         }
 
-        toast.success('Aluno Cadastrado com Sucesso');
+        yield Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Aluno cadastrado com Sucesso',
+            showConfirmButton: false,
+            timer: 1000,
+        });
 
         yield put(createStudentSucess());
     } catch (err) {
-        toast.error('Falha ao criar Cadastro');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Falha ao cadastrar aluno',
+            showConfirmButton: false,
+            timer: 1000,
+        });
+
         yield put(createStudentFail());
     }
 }
@@ -55,7 +84,14 @@ export function* loadToEdit({ payload }) {
 
         yield put(loadStudentToEditSucess(response.data));
     } catch (err) {
-        toast.error('Erro ao carregar pagina');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Falha ao carregar pagina',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     }
 }
 
@@ -64,9 +100,22 @@ export function* deleteStudent({ payload }) {
         const { id } = payload;
         yield call(api.delete, `students/${id}`);
 
-        toast.success('Aluno Deletado com Sucesso');
+        yield Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Aluno deletado com Sucesso',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     } catch (err) {
-        toast.error('Falha ao deletar aluno');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Falha ao deletar aluno',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     }
 }
 
@@ -75,11 +124,24 @@ export function* updateStudent({ payload }) {
     try {
         yield call(api.put, `/students/${id}`, payload);
 
-        toast.success('Aluno Atualizado com sucesso');
+        yield Swal.fire({
+            position: 'center',
+            icon: 'success',
+            title: 'Aluno atualizado com Sucesso',
+            showConfirmButton: false,
+            timer: 1000,
+        });
 
         history.push('/dashboard/students');
     } catch (err) {
-        toast.error('ERRO AO ATUALIZAR ALUNO');
+        Swal.fire({
+            position: 'center',
+            icon: 'error',
+            title: 'Ooops...',
+            text: 'Erro atualizar aluno',
+            showConfirmButton: false,
+            timer: 1000,
+        });
     }
 }
 
