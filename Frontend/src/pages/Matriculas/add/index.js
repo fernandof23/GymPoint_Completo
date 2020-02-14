@@ -8,7 +8,7 @@ import { DateUtils } from 'react-day-picker';
 import { parseISO, addMonths } from 'date-fns';
 import dateFnsFormat from 'date-fns/format';
 import dateFnsParse from 'date-fns/parse';
-import { toast } from 'react-toastify';
+import Swal from 'sweetalert2';
 
 import history from '~/services/history';
 
@@ -95,7 +95,14 @@ export default function Add({ match }) {
         );
 
         if (registerAlready.length > 0) {
-            toast.error('Aluno já tem uma Matrícula');
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Ooops...',
+                text: 'Aluno já matrículado',
+                showConfirmButton: false,
+                timer: 2000,
+            });
             return true;
         }
 
@@ -106,7 +113,14 @@ export default function Add({ match }) {
         const { name, plan } = data;
 
         if (!startDate) {
-            toast.error('SELECIONAR DATA DE INICIO');
+            Swal.fire({
+                position: 'center',
+                icon: 'error',
+                title: 'Ooops...',
+                text: 'Selecionar uma Data de Inicio',
+                showConfirmButton: false,
+                timer: 1000,
+            });
             return;
         }
 
