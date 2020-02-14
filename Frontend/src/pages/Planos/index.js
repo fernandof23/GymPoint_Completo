@@ -19,6 +19,7 @@ export default function Planos() {
 
     useEffect(() => {
         dispatch(loadPlansRequest());
+        document.title = 'GymPoint - Planos';
     }, [dispatch]);
 
     const dataPlans = useSelector(state => state.plans.plans);

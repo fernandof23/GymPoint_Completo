@@ -25,6 +25,7 @@ export default function Matriculas() {
 
     useEffect(() => {
         dispatch(loadRegisterRequest());
+        document.title = 'GymPoint - Matrícula';
     }, [dispatch]);
 
     useEffect(() => {
