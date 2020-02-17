@@ -58,5 +58,5 @@ ReplyQuestions.navigationOptions = ({ navigation }) => ({
 
 
 ReplyQuestions.propTypes = {
-    navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired, getParam: PropTypes.object.isRequired }).isRequired
+    navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired, getParam: PropTypes.func.isRequired }).isRequired
 }

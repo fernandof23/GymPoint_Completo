@@ -38,6 +38,7 @@ export default (signedIn = false) =>
                                     defaultNavigationOptions: {
                                         headerTransparente: false,
                                         headerTintColor: '#000',
+                                        headerTitleAlign: 'center',
                                         headerLeftContainerStyle: {
                                             marginLeft: 20,
                                         },
@@ -63,6 +64,7 @@ export default (signedIn = false) =>
                                     defaultNavigationOptions: {
                                         headerTransparent: false,
                                         headerTintColor: '#000',
+                                        headerTitleAlign: 'center',
                                         headerLeftContainerStyle: {
                                             marginLeft: 20,
                                         },

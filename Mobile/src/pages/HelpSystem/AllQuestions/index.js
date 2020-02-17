@@ -54,7 +54,7 @@ export default function AllQuestions({ navigation }) {
     return (
         <Background>
             <Wrapper>
-                <ButtonCheckIn onPress={() => { }}>
+                <ButtonCheckIn onPress={() => navigation.navigate('MakeQuestions', { user })}>
                     Novo Pedido de auxílio
                 </ButtonCheckIn>
                 <Content
