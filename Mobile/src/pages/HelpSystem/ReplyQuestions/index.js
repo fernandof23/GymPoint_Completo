@@ -1,13 +1,40 @@
 import React from 'react';
-import { View, TouchableOpacity, Image } from 'react-native';
+import { TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import { LogoWrapper } from './styles';
+import {
+    LogoWrapper,
+    ContentList,
+    HeaderContent,
+    Reply,
+    Time,
+    Question,
+} from './styles';
 
 import Logo from '~/assets/logo-header.jpg';
 
-export default function ReplyQuestions() {
-    return <View />;
+export default function ReplyQuestions({ navigation }) {
+    const question = navigation.getParam('item');
+
+    console.tron.log(question);
+
+    return (
+        <ContentList>
+            <HeaderContent>
+                <Reply>PERGUNTA</Reply>
+                <Time>{question.dateDistance}</Time>
+            </HeaderContent>
+            <Question>{question.question}</Question>
+            <HeaderContent>
+                <Reply>RESPOSTA</Reply>
+            </HeaderContent>
+            {question.answer ? (
+                <Question>{question.answer}</Question>
+            ) : (
+                    <Reply>Pergunta ainda sem Reposta, Aguarde!</Reply>
+                )}
+        </ContentList>
+    );
 }
 
 ReplyQuestions.navigationOptions = ({ navigation }) => ({
