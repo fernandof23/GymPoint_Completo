@@ -25,7 +25,7 @@ module.exports = {
         'prettier',
         'jsx-a11y',
         'import',
-        'react-hooks',
+        'react-hooks'
     ],
     rules: {
         'prettier/prettier': 'error',
@@ -48,4 +48,12 @@ module.exports = {
         "react-hooks/exhaustive-deps": "warn",
         "prefer-object-spread": "off"
     },
+
+    settings: {
+        "import/resolver": {
+            "babel-plugin-root-import": {
+                rootPathSuffix: "src"
+            }
+        }
+    }
 };

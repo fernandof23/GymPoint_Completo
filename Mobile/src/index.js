@@ -1,4 +1,5 @@
 import React from 'react';
+
 import { View, Text } from 'react-native';
 
 // import { Container } from './styles';
@@ -6,7 +7,7 @@ import { View, Text } from 'react-native';
 export default function src() {
     return (
         <View>
-            <Text>Olá Mundo</Text>
+            <Text>Olá Mundo2</Text>
         </View>
     );
 }
