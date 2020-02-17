@@ -32,11 +32,7 @@
 
 
 
-## Criado por:
 
 ## Criado por:
 
-- Fernando Santos
-
-- <a href="https://www.linkedin.com/in/fernando-santos-686632122/">Linkedin</a>
-- <a href="mailto:fernandorato.0@hotmail.com">e-mail</a>
+Fernando Santos – [@Fernando](https://www.linkedin.com/in/fernando-santos-686632122/) 
