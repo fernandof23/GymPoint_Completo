@@ -48,7 +48,10 @@ export default function CheckIn() {
             const { id } = user;
             await api.post(`students/${id}/checkins`);
         } catch (err) {
-            Alert.alert('Check-ins maximo efetuado no dia!');
+            Alert.alert(
+                'Check-ins maximo efetuado!',
+                'Você pode fazer 7 checkins por semana'
+            );
         }
     }
 
