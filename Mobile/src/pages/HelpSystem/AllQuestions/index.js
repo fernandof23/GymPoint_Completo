@@ -56,7 +56,6 @@ function AllQuestions({ navigation, isFocused }) {
 
 
 
-    console.tron.log(questions);
     return (
         <Background>
             <Wrapper>
@@ -97,7 +96,12 @@ AllQuestions.navigationOptions = ({ navigation }) => ({
 
 
 AllQuestions.propTypes = {
-    navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
+    navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired,
+    isFocused: PropTypes.bool
+}
+
+AllQuestions.defaultProps = {
+    isFocused: false
 }
 
 export default withNavigationFocus(AllQuestions)

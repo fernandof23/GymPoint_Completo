@@ -18,7 +18,7 @@ import Logo from '~/assets/logo-header.jpg';
 export default function ReplyQuestions({ navigation }) {
     const question = navigation.getParam('item');
 
-    console.tron.log(question);
+
 
     return (
         <ContentList>

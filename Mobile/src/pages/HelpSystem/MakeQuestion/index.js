@@ -13,8 +13,6 @@ export default function MakeQuestion({ navigation }) {
 
     const user = navigation.getParam('user');
 
-    console.tron.log(user);
-
     async function handleSubmit() {
         const { id } = user;
 

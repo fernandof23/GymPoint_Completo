@@ -55,7 +55,6 @@ export default function CheckIn() {
         }
     }
 
-    console.tron.log(checkIn);
     return (
         <Background>
             <Wrapper>
