@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from 'react';
+import { Alert } from 'react-native';
 import { useSelector } from 'react-redux';
+import { formatDistance, parseISO } from 'date-fns';
+import pt from 'date-fns/locale/pt';
 
 import api from '~/services/api';
 
@@ -25,19 +28,31 @@ export default function CheckIn() {
         async function loadCheck() {
             const response = await api.get(`students/${id}/checkins`);
 
-            setCheckIn(response.data);
+            const data = response.data.map(check => ({
+                ...check,
+                timeDistance: formatDistance(
+                    parseISO(check.createdAt),
+                    new Date(),
+                    { addSuffix: true, locale: pt }
+                ),
+            }));
+
+            setCheckIn(data);
         }
 
         loadCheck();
     }, [user]);
 
     async function handleCheckIn() {
-        const { id } = user;
-        await api.post(`students/${id}/checkins`);
+        try {
+            const { id } = user;
+            await api.post(`students/${id}/checkins`);
+        } catch (err) {
+            Alert.alert('Check-ins maximo efetuado no dia!');
+        }
     }
 
     console.tron.log(checkIn);
-
     return (
         <Background>
             <Wrapper>
@@ -45,10 +60,14 @@ export default function CheckIn() {
                     Novo check-in
                 </ButtonCheckIn>
                 <Content>
-                    <CheckBox>
-                        <Title>Check-in #1</Title>
-                        <Time>Hoje às 15h </Time>
-                    </CheckBox>
+                    {checkIn.map(check => (
+                        <CheckBox keyExtractor={check.id}>
+                            <Title>
+                                Check-in #{checkIn.indexOf(check) + 1}
+                            </Title>
+                            <Time>{check.timeDistance} </Time>
+                        </CheckBox>
+                    ))}
                 </Content>
             </Wrapper>
         </Background>
