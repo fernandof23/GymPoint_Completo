@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import { withNavigationFocus } from 'react-navigation'
 import PropTypes from 'prop-types'
 import { formatDistance, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
@@ -13,40 +14,45 @@ import Header from '~/components/Header';
 
 import { Wrapper, ButtonCheckIn, Content, HeaderContent, Reply, Time, Question, ReplyContent, ContentList } from './styles';
 
-export default function AllQuestions({ navigation }) {
+function AllQuestions({ navigation, isFocused }) {
     const [questions, setQuestions] = useState([]);
 
     const user = useSelector(state => state.user.profile);
 
-    useEffect(() => {
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    async function loadQuestion() {
         const { id } = user;
-        async function loadQuestion() {
-            const response = await api.get(`/students/${id}/help-orders`);
+        const response = await api.get(`/students/${id}/help-orders`);
 
-            const data = response.data.map(question => ({
-                ...question,
-                dateDistance: question.answer
-                    ? formatDistance(parseISO(question.updatedAt), new Date(), {
-                        addSuffix: true,
-                        locale: pt,
-                    })
-                    : formatDistance(parseISO(question.createdAt), new Date(), {
-                        addSuffix: true,
-                        locale: pt,
-                    }),
-            }));
+        const data = response.data.map(question => ({
+            ...question,
+            dateDistance: question.answer
+                ? formatDistance(parseISO(question.updatedAt), new Date(), {
+                    addSuffix: true,
+                    locale: pt,
+                })
+                : formatDistance(parseISO(question.createdAt), new Date(), {
+                    addSuffix: true,
+                    locale: pt,
+                }),
+        }));
 
-            function orderByTime(a, b) {
-                return !b.answer
-            }
-
-            const questionInOrder = data.sort(orderByTime)
-
-            setQuestions(questionInOrder);
+        function orderByTime(a, b) {
+            return !b.answer
         }
-        loadQuestion();
-    }, [user, user.id]);
 
+        const questionInOrder = data.sort(orderByTime)
+
+        setQuestions(questionInOrder);
+    }
+
+    useEffect(() => {
+        if (isFocused) {
+
+            loadQuestion()
+        }
+    }, [isFocused, loadQuestion])
 
 
 
@@ -93,3 +99,5 @@ AllQuestions.navigationOptions = ({ navigation }) => ({
 AllQuestions.propTypes = {
     navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
 }
+
+export default withNavigationFocus(AllQuestions)
