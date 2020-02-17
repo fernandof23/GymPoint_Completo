@@ -12,7 +12,10 @@ export const ButtonCheckIn = styled(Button)`
 
 export const Content = styled.FlatList.attrs({
     showsVerticalScrollIndicator: false,
-})``;
+})`
+    padding-bottom: 20px;
+    margin-bottom: 50px;
+`;
 
 export const ContentList = styled(RectButton)`
     background: #fff;

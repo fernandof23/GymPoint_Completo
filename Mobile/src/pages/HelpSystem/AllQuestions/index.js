@@ -36,10 +36,17 @@ export default function AllQuestions({ navigation }) {
                     }),
             }));
 
-            setQuestions(data);
+            function orderByTime(a, b) {
+                return !b.answer
+            }
+
+            const questionInOrder = data.sort(orderByTime)
+
+            setQuestions(questionInOrder);
         }
         loadQuestion();
     }, [user, user.id]);
+
 
 
 

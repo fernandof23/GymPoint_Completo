@@ -1,4 +1,6 @@
+/* eslint-disable prettier/prettier */
 import React from 'react';
+import PropTypes from 'prop-types'
 import { TouchableOpacity, Image } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -53,3 +55,8 @@ ReplyQuestions.navigationOptions = ({ navigation }) => ({
         </TouchableOpacity>
     ),
 });
+
+
+ReplyQuestions.propTypes = {
+    navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired, getParam: PropTypes.object.isRequired }).isRequired
+}
