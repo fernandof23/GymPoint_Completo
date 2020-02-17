@@ -22,6 +22,9 @@ routes.get('/students/:student_id/checkins', CheckinController.index);
 routes.post('/students/:student_id/help-orders', MakeOrdersController.store);
 routes.get('/students/:student_id/help-orders', MakeOrdersController.index);
 
+// Info aboult students
+routes.get('/students/:id', StudentController.show);
+
 // Rotas com controle de authenticação
 routes.use(authController);
 
@@ -30,7 +33,6 @@ routes.put('/users', UserController.update);
 // rotas de Crud dos estudantes
 routes.post('/students', StudentController.store);
 routes.put('/students/:id', StudentController.update);
-routes.get('/students/:id', StudentController.show);
 routes.get('/students', StudentController.index);
 routes.delete('/students/:id', StudentController.delete);
 
