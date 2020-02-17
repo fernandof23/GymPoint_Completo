@@ -1,5 +1,6 @@
 import React from 'react';
 import './config/ReactotronConfig';
+import { StatusBar } from 'react-native';
 
 import { PersistGate } from 'redux-persist/integration/react';
 import { Provider } from 'react-redux';
@@ -13,6 +14,7 @@ export default function src() {
         <>
             <Provider store={store}>
                 <PersistGate persistor={persistor}>
+                    <StatusBar barStyle="dark-content" backgroundColor="#fff" />
                     <App />
                 </PersistGate>
             </Provider>
