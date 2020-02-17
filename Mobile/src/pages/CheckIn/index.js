@@ -64,7 +64,7 @@ export default function CheckIn() {
                 </ButtonCheckIn>
                 <Content>
                     {checkIn.map(check => (
-                        <CheckBox keyExtractor={check.id}>
+                        <CheckBox key={check.id}>
                             <Title>
                                 Check-in #{checkIn.indexOf(check) + 1}
                             </Title>
@@ -78,5 +78,5 @@ export default function CheckIn() {
 }
 
 CheckIn.navigationOptions = ({ navigation }) => ({
-    header: <Header navigation={navigation} />,
+    header: () => <Header navigation={navigation} />,
 });

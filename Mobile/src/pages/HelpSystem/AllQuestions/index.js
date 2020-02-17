@@ -1,6 +1,7 @@
 /* eslint-disable prettier/prettier */
 import React, { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types'
 import { formatDistance, parseISO } from 'date-fns';
 import pt from 'date-fns/locale/pt';
 import Icon from 'react-native-vector-icons/MaterialIcons'
@@ -12,7 +13,7 @@ import Header from '~/components/Header';
 
 import { Wrapper, ButtonCheckIn, Content, HeaderContent, Reply, Time, Question, ReplyContent, ContentList } from './styles';
 
-export default function AllQuestions() {
+export default function AllQuestions({ navigation }) {
     const [questions, setQuestions] = useState([]);
 
     const user = useSelector(state => state.user.profile);
@@ -51,9 +52,9 @@ export default function AllQuestions() {
                 </ButtonCheckIn>
                 <Content
                     data={questions}
-                    keyExtractor={question => question.id}
+                    keyExtractor={question => String(question._id)}
                     renderItem={({ item }) => (
-                        <ContentList onPress={() => { }}>
+                        <ContentList onPress={() => navigation.navigate('ReplYQuestions', { item })}>
                             <HeaderContent>
                                 <ReplyContent>
                                     <Icon name="check-circle" color={item.answer ? "#42CB59" : "#999999"} size={14} />
@@ -78,5 +79,10 @@ export default function AllQuestions() {
 }
 
 AllQuestions.navigationOptions = ({ navigation }) => ({
-    header: <Header navigation={navigation} />,
+    header: () => <Header navigation={navigation} />,
 });
+
+
+AllQuestions.propTypes = {
+    navigation: PropTypes.shape({ navigate: PropTypes.func.isRequired }).isRequired
+}
