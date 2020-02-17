@@ -1,13 +1,21 @@
 import React from 'react';
+import './config/ReactotronConfig';
 
-import { View, Text } from 'react-native';
+import { PersistGate } from 'redux-persist/integration/react';
+import { Provider } from 'react-redux';
 
-// import { Container } from './styles';
+import { persistor, store } from './store';
+
+import Routes from './routes';
 
 export default function src() {
     return (
-        <View>
-            <Text>Olá Mundo2</Text>
-        </View>
+        <>
+            <Provider store={store}>
+                <PersistGate persistor={persistor}>
+                    <Routes />
+                </PersistGate>
+            </Provider>
+        </>
     );
 }
