@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import {
     Container,
@@ -10,6 +10,8 @@ import {
     ContainerInput,
 } from './styles';
 
+import { signInRequest } from '~/store/modules/auth/actions';
+
 import logo from '~/assets/logo.png';
 
 export default function SignIn() {
@@ -17,7 +19,11 @@ export default function SignIn() {
 
     const loading = useSelector(state => state.auth.loading);
 
-    function handleSubmit() { }
+    const dispatch = useDispatch();
+
+    function handleSubmit() {
+        dispatch(signInRequest(idLogin));
+    }
 
     return (
         <Container>
@@ -26,6 +32,7 @@ export default function SignIn() {
             <Form>
                 <ContainerInput>
                     <FormInput
+                        keyboardType="number-pad"
                         autoCaptalize="none"
                         placeholder="Informe seu ID de cadastro"
                         returnKeyType="send"
