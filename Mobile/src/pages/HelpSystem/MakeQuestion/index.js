@@ -1,12 +1,44 @@
-import React from 'react';
-import { TouchableOpacity, View, Image } from 'react-native';
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { TouchableOpacity, Image, Alert } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-import Logo from '~/assets/logo-header.jpg';
-import { LogoWrapper } from './styles';
+import api from '~/services/api';
 
-export default function MakeQuestion() {
-    return <View />;
+import Logo from '~/assets/logo-header.jpg';
+import { LogoWrapper, Container, InputText, SubmitButton } from './styles';
+
+export default function MakeQuestion({ navigation }) {
+    const [question, setQuestion] = useState('');
+
+    const user = navigation.getParam('user');
+
+    console.tron.log(user);
+
+    async function handleSubmit() {
+        const { id } = user;
+
+        if (!question) {
+            Alert.alert('Escreva sua duvida, antes de enviar');
+        } else {
+            await api.post(`students/${id}/help-orders`, { question });
+
+            navigation.navigate('AllQuestions');
+        }
+    }
+    return (
+        <Container>
+            <InputText
+                placeholder="Inclua seu pedido de auxílio"
+                multiline
+                numberOfLines={14}
+                onChangeText={setQuestion}
+                value={question}
+            />
+
+            <SubmitButton onPress={handleSubmit}>Enviar Pedido</SubmitButton>
+        </Container>
+    );
 }
 
 MakeQuestion.navigationOptions = ({ navigation }) => ({
@@ -25,3 +57,10 @@ MakeQuestion.navigationOptions = ({ navigation }) => ({
         </TouchableOpacity>
     ),
 });
+
+MakeQuestion.propTypes = {
+    navigation: PropTypes.shape({
+        navigate: PropTypes.func.isRequired,
+        getParam: PropTypes.func.isRequired,
+    }).isRequired,
+};
