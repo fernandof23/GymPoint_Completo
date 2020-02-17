@@ -12,8 +12,12 @@ import AllQuestions from '~/pages/HelpSystem/AllQuestions';
 import ReplYQuestions from '~/pages/HelpSystem/ReplyQuestions';
 import MakeQuestions from '~/pages/HelpSystem/MakeQuestion';
 
-const tabBarIcon = ({ tintColor }) => (
+const tabBarIconHelp = ({ tintColor }) => (
     <Icon name="live-help" size={20} color={tintColor} />
+);
+
+const tabBarIconCheck = ({ tintColor }) => (
+    <Icon name="edit-location" size={20} color={tintColor} />
 );
 
 export default (signedIn = false) =>
@@ -25,7 +29,28 @@ export default (signedIn = false) =>
                 }),
                 App: createBottomTabNavigator(
                     {
-                        CheckIn,
+                        CheckIn: {
+                            screen: createStackNavigator(
+                                {
+                                    CheckIn,
+                                },
+                                {
+                                    defaultNavigationOptions: {
+                                        headerTintColor: '#000',
+                                        headerLeftContainerStyle: {
+                                            marginLeft: 20,
+                                        },
+                                    },
+                                }
+                            ),
+                            navigationOptions: {
+                                tabBarVisible: true,
+                                tabBarLabel: 'Check-ins',
+                                activeTintColor: '#ee4e62',
+                                inactiveTintColor: '#999',
+                                tabBarIcon: tabBarIconCheck,
+                            },
+                        },
                         new: {
                             screen: createStackNavigator(
                                 {
@@ -35,7 +60,6 @@ export default (signedIn = false) =>
                                 },
                                 {
                                     defaultNavigationOptions: {
-                                        headerTransparent: true,
                                         headerTintColor: '#000',
                                         headerLeftContainerStyle: {
                                             marginLeft: 20,
@@ -48,7 +72,7 @@ export default (signedIn = false) =>
                                 tabBarLabel: 'Pedir Ajuda',
                                 activeTintColor: '#ee4e62',
                                 inactiveTintColor: '#999',
-                                tabBarIcon,
+                                tabBarIcon: tabBarIconHelp,
                             },
                         },
                     },
@@ -71,6 +95,10 @@ export default (signedIn = false) =>
         )
     );
 
-tabBarIcon.propTypes = {
+tabBarIconCheck.propTypes = {
+    tintColor: PropTypes.string.isRequired,
+};
+
+tabBarIconHelp.propTypes = {
     tintColor: PropTypes.string.isRequired,
 };

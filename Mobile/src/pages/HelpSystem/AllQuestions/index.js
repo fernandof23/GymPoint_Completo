@@ -1,9 +1,19 @@
 import React from 'react';
-import { View } from 'react-native';
+import { View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
-// import { Container } from './styles';
+import Background from '~/components/Background';
+
+import logo from '~/assets/logo.png';
 
 export default function AllQuestions() {
-    return <View />;
+    return (
+        <Background>
+            <Text>Teste</Text>
+        </Background>
+    );
 }
+
+AllQuestions.navigationOptions = ({ navigation }) => ({
+    title: 'Teste',
+});

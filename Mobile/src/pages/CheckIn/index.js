@@ -8,12 +8,3 @@ import Background from '~/components/Background';
 export default function CheckIn() {
     return <Background />;
 }
-
-const tabBarIcon = ({ tintColor }) => (
-    <Icon name="edit-location" size={20} color={tintColor} />
-);
-
-CheckIn.navigationOptions = {
-    tabBarLabel: 'Check-ins',
-    tabBarIcon,
-};
