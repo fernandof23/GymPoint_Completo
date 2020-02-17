@@ -36,6 +36,7 @@ export default (signedIn = false) =>
                                 },
                                 {
                                     defaultNavigationOptions: {
+                                        headerTransparente: false,
                                         headerTintColor: '#000',
                                         headerLeftContainerStyle: {
                                             marginLeft: 20,
@@ -60,6 +61,7 @@ export default (signedIn = false) =>
                                 },
                                 {
                                     defaultNavigationOptions: {
+                                        headerTransparent: false,
                                         headerTintColor: '#000',
                                         headerLeftContainerStyle: {
                                             marginLeft: 20,
@@ -84,6 +86,9 @@ export default (signedIn = false) =>
                             inactiveTintColor: '#999',
                             style: {
                                 backgroundColor: '#fff',
+                            },
+                            headerTitleStyle: {
+                                alignSelf: 'center',
                             },
                         },
                     }

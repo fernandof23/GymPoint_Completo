@@ -1,10 +1,8 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import { Text } from 'react-native';
 
 import Background from '~/components/Background';
-
-import logo from '~/assets/logo.png';
+import Header from '~/components/Header';
 
 export default function AllQuestions() {
     return (
@@ -15,5 +13,5 @@ export default function AllQuestions() {
 }
 
 AllQuestions.navigationOptions = ({ navigation }) => ({
-    title: 'Teste',
+    header: <Header navigation={navigation} />,
 });
